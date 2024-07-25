@@ -1,6 +1,7 @@
 package com.ust.Postserver.controller;
 
 import com.ust.Postserver.Client.Comment;
+import com.ust.Postserver.Client.FullResponse;
 import com.ust.Postserver.Client.Responsebody;
 import com.ust.Postserver.dto.Postdto;
 import com.ust.Postserver.model.Post;
@@ -58,5 +59,11 @@ public class postcontroller {
     public List<Post> getposts(@PathVariable int userId){
         return postService.getPostsByUserId(userId);
     }
+
+    @GetMapping("/getallreviews/{postId}")
+    public FullResponse getAllReviewsByPostId(@PathVariable int postId){
+        return postService.getAllReviewsByPostId(postId);
+    }
+
 
 }

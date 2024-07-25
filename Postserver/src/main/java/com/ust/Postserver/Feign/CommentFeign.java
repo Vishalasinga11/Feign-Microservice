@@ -15,6 +15,8 @@ public interface CommentFeign {
 
     @GetMapping("/getall")
     List<Comment> getAll();
+
+
 }
 
 

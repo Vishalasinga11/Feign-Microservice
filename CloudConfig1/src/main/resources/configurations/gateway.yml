@@ -27,3 +27,7 @@ spring:
           uri: http://localhost:9093
           predicates:
             - Path=/users/**
+        - id: reviewservice
+          uri: http://localhost:9094
+          predicates:
+            - Path=/review/**

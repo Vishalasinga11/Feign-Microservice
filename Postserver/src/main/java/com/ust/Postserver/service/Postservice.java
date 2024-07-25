@@ -2,8 +2,11 @@ package com.ust.Postserver.service;
 
 
 import com.ust.Postserver.Client.Comment;
+import com.ust.Postserver.Client.FullResponse;
 import com.ust.Postserver.Client.Responsebody;
+import com.ust.Postserver.Client.Review;
 import com.ust.Postserver.Feign.CommentFeign;
+import com.ust.Postserver.Feign.ReviewFeign;
 import com.ust.Postserver.dto.Postdto;
 import com.ust.Postserver.model.Post;
 import com.ust.Postserver.repository.postrepository;
@@ -19,6 +22,9 @@ public class Postservice {
 
     @Autowired
     private CommentFeign commentFeign;
+
+    @Autowired
+    private ReviewFeign reviewFeign;
 
     public Post createPost(Postdto postdtolist) {
         Post post = Post.builder()
@@ -61,6 +67,21 @@ public class Postservice {
 
     public List<Post> getPostsByUserId(int userId) {
         return postRepository.findByUserId(userId);
+    }
+
+    public FullResponse getAllReviewsByPostId(int postId) {
+        Post c=postRepository.findById(postId).orElse(null);
+        List<Review> list = reviewFeign.findReviewsByPostId(postId);
+        FullResponse res= new FullResponse();
+        res.setPostId(c.getPostId());
+        res.setTitle(c.getTitle());
+        res.setDescription(c.getDescription());
+        res.setAuthor(c.getAuthor());
+        res.setDate(c.getDate());
+        res.setStatus(c.getStatus());
+        res.setReviews(list);
+        return res;
+
     }
 }
 
